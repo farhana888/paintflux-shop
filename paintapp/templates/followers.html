@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Followers</title>
+    <style>
+        body { font-family: Arial; padding: 20px; background: #f5f5f5; }
+        .card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            width: 500px;
+            margin: auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .btn {
+            padding: 8px 15px;
+            border: none;
+            background: #1500ff;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .list-box {
+            background: #fafafa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .item {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <h2>Your Profile</h2>
+
+    <!-- FOLLOWER COUNT -->
+    <p><b>Your Followers:</b> {{ followers.count }}</p>
+
+    <!-- FOLLOWERS LIST -->
+    <div class="list-box">
+        <h3>Followers</h3>
+
+        {% for i in followers %}
+            <div class="item">{{ i.follower.username }}</div>
+        {% empty %}
+            <p>No followers yet.</p>
+        {% endfor %}
+    </div>
+
+</div>
+
+</body>
+</html>

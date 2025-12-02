@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<h2>Order: {{ painting.name }}</h2>
+<img src="{{ painting.image.url }}" width="200">
+
+<p>Price: ₹{{ painting.price }}</p>
+<p>{{ painting.description }}</p>
+
+<form method="POST" action="{% url 'paintapp:placeorder' painting.id %}">
+    {% csrf_token %}
+    
+    <label>City:</label>
+    <input type="text" name="city" required><br>
+
+    <label>State:</label>
+    <input type="text" name="state" required><br>
+
+    <label>Country:</label>
+    <input type="text" name="country" required><br>
+
+    <label>Pincode:</label>
+    <input type="number" name="pincode" required><br>
+
+    <button type="submit">Place Order</button>
+</form>
+</body>
+</html>

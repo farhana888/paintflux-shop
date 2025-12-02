@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Following</title>
+    <style>
+        body { font-family: Arial; padding: 20px; background: #f5f5f5; }
+        .card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            width: 500px;
+            margin: auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .list-box {
+            background: #fafafa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .item {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <h2>Your Following</h2>
+
+    <!-- FOLLOWING COUNT -->
+    <p><b>Total Following:</b> {{ following.count }}</p>
+
+    <!-- FOLLOWING LIST -->
+    <div class="list-box">
+        <h3>Following</h3>
+
+        {% for i in following %}
+            <div class="item">{{ i.following.username }}</div>
+        {% empty %}
+            <p>You are not following anyone yet.</p>
+        {% endfor %}
+    </div>
+
+</div>
+
+</body>
+</html>

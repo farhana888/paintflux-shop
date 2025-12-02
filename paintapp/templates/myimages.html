@@ -1,0 +1,139 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Gallery with Popups</title>
+
+  <!-- ✅ Bootstrap CSS -->
+  <link 
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" 
+    rel="stylesheet">
+
+  <style>
+    body {
+      background: #f8f9fa;
+      font-family: Arial, sans-serif;
+    }
+    .product-entry {
+      transition: all 0.3s ease;
+    }
+    .product-entry:hover {
+      transform: scale(1.02);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container py-4" style="max-width:1200px;">
+    <div class="row">
+
+      {% for i in myimages %}
+      <div class="col-lg-3 col-md-6 col-sm-12 mb-4 text-center" style="padding:10px;">
+        <div class="product-entry border" 
+             style="border:1px solid #ddd; border-radius:10px; overflow:hidden; background:#fff; height:100%; display:flex; flex-direction:column; justify-content:space-between;">
+
+          <!-- Image -->
+          <a href="#" style="display:block; width:100%; height:220px; overflow:hidden; border-bottom:1px solid #eee;">
+               {% if i.image %}
+            <img src="{{ i.image.url }}" alt="{{ i.image }}" 
+                 style="width:100%; height:100%; object-fit:cover; display:block;">
+                 {% else %}
+            <img src="https://media.istockphoto.com/id/814423752/photo/eye-of-model-with-colorful-art-make-up-close-up.jpg?s=612x612&w=0&k=20&c=l15OdMWjgCKycMMShP8UK94ELVlEGvt7GmB_esHWPYE=" class="img-fluid" alt="{{ i.image }}">
+							{% endif %}
+          </a>
+
+          <!-- Description -->
+          <div class="desc" style="padding:12px 10px 15px;">
+            <h3 style="font-size:18px; font-weight:600; margin:8px 0 4px; color:#222;">{{ i.name }}</h3>
+            <p style="color:#555; font-size:15px; margin:0;">{{ i.description }}</p>
+            <span class="price" style="display:block; font-weight:700; color:#007bff; font-size:17px; margin-top:5px;">₹{{ i.price }}</span>
+            <h3 style="font-size:14px; color:#888; margin-top:5px;">{{ i.category }}</h3>
+          </div>
+
+          <!-- Buttons -->
+          <div style="display:flex; justify-content:center; gap:10px; padding:10px; border-top:1px solid #eee;">
+            <!-- Edit Button -->
+            <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal{{ i.id }}">
+              Edit
+            </button>
+
+            <!-- Delete Button -->
+            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ i.id }}">
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ✅ Edit Modal -->
+      <div class="modal fade" id="editModal{{ i.id }}" tabindex="-1" aria-labelledby="editModalLabel{{ i.id }}" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="editModalLabel{{ i.id }}">Edit Painting</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <form method="post" action="{% url 'paintapp:edit' i.id %}" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="modal-body">
+                <div class="mb-3 text-start">
+                  <label class="form-label">Name</label>
+                  <input type="text" name="name" value="{{ i.name }}" class="form-control" required>
+                </div>
+                <div class="mb-3 text-start">
+                  <label class="form-label">Description</label>
+                  <textarea name="description" class="form-control" rows="3" required>{{ i.description }}</textarea>
+                </div>
+                <div class="mb-3 text-start">
+                  <label class="form-label">Price (₹)</label>
+                  <input type="number" name="price" value="{{ i.price }}" class="form-control" required>
+                </div>
+                <div class="mb-3 text-start">
+              <label class="form-label">Change Image</label>
+              <input type="file" name="image" accept="image/*" class="form-control">
+            </div>
+              </div>
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-warning">Save Changes</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- ✅ Delete Modal -->
+      <div class="modal fade" id="deleteModal{{ i.id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ i.id }}" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="deleteModalLabel{{ i.id }}">Delete Painting</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              Are you sure you want to delete <strong>{{ i.name }}</strong>?
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              
+               <a href="{% url 'paintapp:deleteimage' i.id %}"><button  class="btn btn-danger">Yes, Delete</button></a> 
+              
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- ✅ Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>More from {{user.username }}</title>
+</head>
+<body style="padding: 20px; font-family: Arial;">
+
+    <h2>{{ user.username }}</h2>
+    
+    <img src="{{ user.profilepicture.url }}" style="width:300px; height:300px; object-fit:cover; border-radius:8px;"alt="{{ user.name }}">
+
+
+    <hr>
+     
+    <h3>More posts from {{user.username }}</h3>
+
+    <div style="display:flex; gap:20px; flex-wrap:wrap;">
+
+        {% for i in arts %}
+              <p>{{ i.description }}</p>
+              <p>{{ i.category }}</p>
+              <p>{{ i.price }}</p>
+              <div style="width:150px; text-align:center;">
+            
+            <img src="{{ i.image.url  }}" 
+                 style="width:150px; height:150px; object-fit:cover; border-radius:8px;">
+
+           
+        </div>
+        {% endfor %}
+    </div>
+
+</body>
+</html>
+ 

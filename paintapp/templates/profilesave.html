@@ -1,0 +1,113 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eef2f3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .profile-card {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            width: 400px;
+        }
+        .profile-card h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .profile-card label {
+            font-weight: bold;
+            color: #555;
+        }
+        .profile-card input,
+        .profile-card textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 6px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+        .profile-card button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .profile-card button:hover {
+            background-color: #0056b3;
+        }
+        .profile-pic-preview {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .profile-pic-preview img {
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border: 2px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="profile-card">
+        <h2>My Profile</h2>
+        <form method="post" action="{% url 'paintapp:profilesave' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="profile-pic-preview">
+                <img src="default-profile.jpg" alt="Profile Picture" id="preview">
+            </div>
+
+
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" value="{{request.user.phonenumber}}" pattern="[0-9]{10}" required>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" value="{{request.user.email}}" required>
+
+            <label for="profile_pic">Profile Picture: {{request.user.profilepicture}}</label>
+            <input type="file" id="profile_pic" name="profilepicture" accept="image/*" onchange="previewImage(event)">
+
+            <label for="address">Address</label>
+            <textarea id="address" name="address"    rows="3">{{request.user.address}}</textarea>
+
+            
+            
+
+            <button type="submit">Save Profile</button>
+        </form>
+    </div>
+
+    <script>
+        // Preview uploaded profile image
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function(){
+                document.getElementById('preview').src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
+
+</body>
+</html>

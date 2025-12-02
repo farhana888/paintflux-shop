@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div style="max-width:500px;margin:40px auto;padding:25px;border-radius:12px;box-shadow:0 0 10px rgba(0,0,0,0.1);background:#fff;font-family:sans-serif;">
+  <h2 style="text-align:center;margin-bottom:20px;color:#333;">Upload Item</h2>
+
+  <form method="POST" action="{% url 'paintapp:uploadsave'%}" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+     <label for="name">Name:</label>
+     <input type="text" id="name" name="name" placeholder="name" required>
+    <label style="font-weight:bold;display:block;margin-bottom:5px;">Description:</label>
+    <textarea name="description" rows="4" placeholder="Write a short description..." required 
+              style="width:100%;padding:8px;border:1px solid #ccc;border-radius:6px;margin-bottom:15px;"></textarea>
+
+    <label style="font-weight:bold;display:block;margin-bottom:5px;">Price (₹):</label>
+    <input type="number" name="price" placeholder="Enter price" required min="0" 
+           style="width:100%;padding:8px;border:1px solid #ccc;border-radius:6px;margin-bottom:15px;">
+
+    <label style="font-weight:bold;display:block;margin-bottom:5px;">Category:</label>
+    <input type="text" name="category" placeholder="e.g. Painting, Craft, Design" 
+           style="width:100%;padding:8px;border:1px solid #ccc;border-radius:6px;margin-bottom:15px;">
+
+    <label style="font-weight:bold;display:block;margin-bottom:5px">Upload Image:</label>
+    <input type="file" name="image" accept="image/*" required 
+           style="padding:8px;border:1px solid #ccc;border-radius:6px;margin-bottom:20px;">
+
+    <button type="submit" 
+            style="width:100%;padding:10px;border:none;border-radius:8px;background-color:#007bff;color:white;font-size:16px;cursor:pointer;">
+      Upload
+    </button>
+  </form>
+</div>
+    
+</body>
+</html>

@@ -1,0 +1,78 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Cart</title>
+</head>
+<body style="font-family: Arial; background:#f8f8f8; padding:30px;">
+{% for message in messages %}
+<p style="color: green;">{{message}}</p>
+{% empty %}
+<p></p>
+{% endfor %}
+    <h2 style="text-align:center; margin-bottom:30px; color:#222;">🛒 My Cart</h2>
+
+    {% for i in myproduct %}
+    <div style="
+        max-width:900px; 
+        margin:auto; 
+        background:white; 
+        padding:20px; 
+        border-radius:12px; 
+        box-shadow:0 4px 14px rgba(0,0,0,0.15);
+        display:flex;
+        align-items:flex-start;
+        margin-bottom:20px;
+    ">
+
+        <!-- ART IMAGE -->
+        <img src="{{ i.art.image.url }}" 
+             style="width:180px; height:180px; object-fit:cover; border-radius:10px;">
+
+        <div style="margin-left:25px; width:100%;">
+
+            <h2 style="margin:0; color:#333;">{{ i.art.name }}</h2>
+
+            <p style="margin:6px 0; color:#555; font-size:15px;">
+                <strong>Artist:</strong> {{ i.art.user.username }}
+            </p>
+
+            <p style="margin:6px 0; color:#555; font-size:15px;">
+                <strong>Date Added:</strong> {{ i.date|date:"Y-m-d" }}
+            </p>
+
+            <p style="color:#777; font-size:14px;">{{i.art.description }}</p>
+
+            <h2 style="color:#1500ff; margin-bottom:15px;">₹{{ i.art.price|default:0|add:"0"|floatformat:0|add:i.art.price }}</h2>
+            <p style="margin:0; color:#333;">quantity:{{ i.quantity }}</p>
+
+            <div style="display:flex; gap:15px;">
+
+                <form action="" method="post">
+                  
+                    <button style="
+                        padding:12px 20px;
+                        background:#ff3b3b;
+                        color:white;
+                        border:none;
+                        border-radius:6px;
+                        cursor:pointer;">Remove</button>
+                </form>
+
+                <button style="
+                    padding:12px 20px;
+                    background:#1500ff;
+                    color:white;
+                    border:none;
+                    border-radius:6px;
+                    cursor:pointer;">Checkout</button>
+
+            </div>
+
+        </div>
+
+    </div>
+    {% endfor %}
+
+</body>
+</html>

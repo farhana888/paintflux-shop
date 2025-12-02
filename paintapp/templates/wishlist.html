@@ -1,0 +1,92 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Wishlist</title>
+</head>
+
+<body style="font-family: Arial; background:#f5f6fa; padding:30px;">
+    {% for message in messages %}
+<p style="color: green;">{{message}}</p>
+{% empty %}
+<p></p>
+{% endfor %}
+
+    <h2 style="text-align:center; margin-bottom:30px; color:#222;">💖 My Wishlist</h2>
+
+    {% for i in wishlist %}
+    <div style="
+        max-width:900px;
+        margin:auto;
+        background:white;
+        padding:20px;
+        border-radius:14px;
+        display:flex;
+        gap:20px;
+        box-shadow:0 4px 14px rgba(0,0,0,0.1);
+        margin-bottom:20px;">
+
+
+        <!-- IMAGE -->
+        <img src="{{ i.art.image.url }}" 
+             style="width:180px; height:180px; object-fit:cover; border-radius:12px;">
+
+
+        <!-- DETAILS -->
+        <div style="flex:1;">
+
+            <h2 style="margin:0; color:#333;">{{ i.art.name }}</h2>
+
+            <p style="margin:5px 0; color:#666;">
+                <strong>Artist:</strong> {{ i.art.user.username }}
+            </p>
+
+            <p style="margin:5px 0; color:#666;">
+                <strong>Added On:</strong> {{ i.date|date:"Y-m-d" }}
+            </p>
+
+            <p style="margin-top:10px; color:#777; font-size:14px;">
+                {{ i.art.description }}
+            </p>
+
+            <h3 style="color:#1500ff; margin-top:10px;">₹{{ i.art.price }}</h3>
+
+            <div style="margin-top:15px; display:flex; gap:15px;">
+
+                <!-- REMOVE BUTTON -->
+                <!--  -->
+                    <button style="
+                        padding:12px 20px;
+                        background:#ff4d4d;
+                        color:white;
+                        border:none;
+                        border-radius:8px;
+                        cursor:pointer;">
+                        Remove
+                    </button>
+                </form>
+
+                <!-- MOVE TO CART -->
+                <a href="{% url 'paintapp:wishlist' i.art.id %}" >
+                    {% csrf_token %}
+                    <button style="
+                        padding:12px 20px;
+                        background:#1500ff;
+                        color:white;
+                        border:none;
+                        border-radius:8px;
+                        cursor:pointer;">
+                        Move to Cart
+                    </button>
+                    </a>
+                
+
+            </div>
+
+        </div>
+
+    </div>
+    {% endfor %}
+
+</body>
+</html>

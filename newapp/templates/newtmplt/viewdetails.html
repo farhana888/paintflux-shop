@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+</head>
+<body>
+
+
+
+<div style="max-width: 450px; margin: 40px auto; 
+            background: #ffffff; padding: 25px; border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+            font-family: Arial, sans-serif;">
+
+    <div style="text-align: center;">
+
+        {% if viewuser.profilepicture %}
+            <img src="{{ viewuser.profilepicture.url }}"
+                 style="width: 140px; height: 140px; border-radius: 50%; object-fit: cover;">
+        {% else %}
+            <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                 style="width: 140px; height: 140px; border-radius: 50%; object-fit: cover;">
+        {% endif %}
+
+        <h2>{{ viewuser.username }}</h2>
+        <p>📧 {{ viewuser.email }}</p>
+        <p>📍 {{ viewuser.address }}</p>
+        <p>📞 {{ viewuser.phonenumber }}</p>
+
+        <a href="{% url 'newapp:viewwork' viewuser.id %}">
+            <button style="background:#007bff; color:white; padding:6px 14px; border:none; border-radius:6px;">
+                View Work
+            </button>
+        </a>
+         
+        <a href="{% url 'newapp:viewpurchase' viewuser.id %}">
+            <button style="background:#28a745; color:white; padding:6px 14px; border:none; border-radius:6px;">
+             View Purchase{{ total_art_count }} 
+            </button>
+        </a>
+       
+        <button style="background:#dc3545; color:white; padding:6px 14px; border:none; border-radius:6px; margin-right:5px;">
+            Block
+        </button>
+
+        <button style="background:#ff9800; color:white; padding:6px 14px; border:none; border-radius:6px;">
+            Suspend
+        </button>
+
+    </div>
+
+</div>
+
+
+
+</body>
+</html>

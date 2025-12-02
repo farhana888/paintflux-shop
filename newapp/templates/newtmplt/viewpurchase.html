@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>More from {{viewuser.username }}</title>
+</head>
+<body style="padding: 20px; font-family: Arial;">
+
+ 
+
+<h2>{{ viewuser.username }}'s Purchases</h2>
+<h3>Total purchased arts: {{ total_art_count }}</h3>
+
+{% for i in arts %}
+    <div style="margin-bottom:20px;"> 
+        <p>City: {{ i.city }}</p>
+        <p>State: {{ i.state }}</p>
+        <p>Country: {{ i.country }}</p>
+        <p>Pincode: {{ i.pincode }}</p>
+    </div>
+{% empty %}
+    <p>No purchases found.</p>
+{% endfor %}
+</html>
+ 

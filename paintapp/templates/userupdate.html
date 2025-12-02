@@ -1,0 +1,167 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painting and Artist Details</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f4f6f8; margin: 0; padding: 40px;">
+
+  <div style="max-width: 900px; margin: auto; background: #fff; 
+              border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+              display: flex; justify-content: space-between; 
+              padding: 30px; gap: 30px;">
+
+    <!-- Left Side: Painting Details -->
+    <div style="flex: 1; border-right: 1px solid #eee; padding-right: 25px;">
+      <h2 style="margin-top: 0; color: #222;">🎨 {{ my_item.name }}</h2>
+      <p style="color: #555; font-size: 15px; margin-bottom: 10px;">
+        {{ my_item.description }}
+      </p>
+      <p style="font-size: 18px; font-weight: bold; color: #333;">💰 ₹{{ my_item.price }}</p>
+      <p style="font-size: 15px; color: #555;">🖌️ Category: <strong>{{ my_item.category }}</strong></p>
+
+      {% if my_item.image %}
+        <div style="margin-top: 15px;">
+          <img src="{{ my_item.image.url }}" alt="{{ my_item.name }}" 
+               style="width: 100%; max-height: 300px; object-fit: cover; border-radius: 8px;">
+        </div>
+      {% else %}
+        <div style="margin-top: 15px;">
+          <img src="https://media.istockphoto.com/id/1397714125/photo/sunset-landscape.jpg?s=612x612&w=0&k=20&c=EXAMPLE123" 
+               alt="Default Painting" 
+               style="width: 100%; max-height: 300px; object-fit: cover; border-radius: 8px;">
+        </div>
+      {% endif %}
+      <a href="{% url 'paintapp:buy'  my_item.id %}">
+     <button style="
+    width:90px;
+    padding:10px;
+    background-color:#282aa7;
+    color:white;
+    border:none;
+    border-radius:6px;
+    font-size:14px;
+    cursor:pointer;
+">
+    Buy
+</button>
+</a>
+
+<a href="{% url 'paintapp:mycart' my_item.id %}">
+<button style="
+    width:90px;
+    padding:10px;
+    background-color:#282aa7;
+    color:white;
+    border:none;
+    border-radius:6px;
+    font-size:14px;
+    cursor:pointer;
+">
+   my cart
+</button>
+</a>
+
+<a href="{% url 'paintapp:viewmore' my_item.user.id %}">
+<button style="
+    width:90px;
+    padding:10px;
+    background-color:#282aa7;
+    color:white;
+    border:none;
+    border-radius:6px;
+    font-size:14px;
+    cursor:pointer;
+">
+    view more
+</button>
+</a>
+
+<a href="{% url 'paintapp:wishlist' my_item.id %}">
+<button style="
+    width:90px;
+    padding:10px;
+    background-color:#282aa7;
+    color:white;
+    border:none;
+    border-radius:6px;
+    font-size:14px;
+    cursor:pointer;
+">
+    Wish List
+</button>
+</a>    </div>
+   
+    <!-- Right Side: Artist Details -->
+    <div style="flex: 0.8; display: flex; flex-direction: column; 
+                align-items: center; justify-content: center; text-align: center;">
+
+      {% if my_item.user.profilepicture %}
+        <img src="{{ my_item.user.profilepicture.url }}" 
+             alt="User Profile" 
+             style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; 
+                    border: 2px solid #ddd; margin-bottom: 15px;">
+      {% else %}
+        <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" 
+             alt="Default Profile" 
+             style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; 
+                    border: 2px solid #ddd; margin-bottom: 15px;">
+      {% endif %}
+
+      <h3 style="margin: 5px 0; color: #222;"> {{ my_item.user.username }}</h3>
+      <p style="margin: 0; color: #555; font-size: 14px;">📧 {{ my_item.user.email }}</p>
+      <p style="margin-top: 8px; color: #777; font-size: 13px;">📍{{ my_item.user.address }}</p>
+      <p style="margin-top: 8px; color: #777; font-size: 13px;"> 📞{{ my_item.user.phonenumber}}</p>
+   <div style="display: flex; gap: 10px;">
+{% if f %}
+<a href="{% url 'paintapp:follow' my_item.user.id %}">
+<button style="
+            width:90px;
+            padding:10px;
+            background-color:#ff3b3b;
+            color:white;
+            border:none;
+            border-radius:6px;
+            font-size:14px;
+            cursor:pointer;">
+            Unfollow
+        </button>
+        </a>
+        {% else %}
+    <a href="{% url 'paintapp:follow' my_item.user.id %}">
+        <button style="
+            width:90px;
+            padding:10px;
+            background-color:#282aa7;
+            color:white;
+            border:none;
+            border-radius:6px;
+            font-size:14px;
+            cursor:pointer;">
+            Follow
+        </button>
+    </a>
+    {% endif %}
+    {% if messages %}
+    <div style="margin-top:20px;">
+        {% for message in messages %}
+            <p style="color:green;">{{ message }}</p>
+        {% endfor %}
+    </div>
+{% endif %}
+
+
+        
+   
+
+</div>
+    </div>
+  </div>
+ 
+{% endblock %}
+</body>
+</html>

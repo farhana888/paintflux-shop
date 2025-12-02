@@ -1,0 +1,171 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Buy {{ buy_item.name }}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/buy.css' %}">
+    <style>
+        body {
+            font-family: Arial;
+            padding: 20px;
+            background: #f2f4f7;
+        }
+
+        .card {
+            width: 400px;
+            margin: auto;
+            background: #fff;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .img-box img {
+            width: 100%;
+            border-radius: 12px;
+            object-fit: cover;
+        }
+
+        h2 {
+            margin-top: 15px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .desc {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .price-box {
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price {
+            color: #ff0055;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        select {
+            padding: 10px;
+            width: 100%;
+            margin-top: 10px;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            background: #0057ff;
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            font-size: 17px;
+            margin-top: 15px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .btn-cart {
+            background: #ff7700;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        .rating-box {
+            margin-top: 15px;
+            display: flex;
+            justify-content: space-between;
+            color: #888;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+    <div class="img-box">
+        <img src="{{ buy_item.image.url }}" alt="">
+    </div>
+
+    <h2>{{ buy_item.name }}</h2>
+
+    <p class="desc">{{ buy_item.description }}</p>
+
+    <div class="price-box">
+        <p class="price">₹{{ total_price }}</p>
+    
+        <p style="color: green; font-weight: bold;">In Stock</p>
+    </div>
+    
+
+    <!-- QUANTITY SELECT -->
+    <div style="
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 12px;
+">
+
+    <!-- MINUS BUTTON -->
+    <a href="{% url 'paintapp:updatequantity' buy_item.id 'minus' %}">
+        <button type="button"
+                style="padding: 10px 16px; font-size: 20px; border-radius: 8px;
+                       border:none; background:#ddd; cursor:pointer;">
+            –
+        </button>
+    </a>
+
+    <!-- SHOW MESSAGES -->
+    {% for message in messages %}
+        <p style="color: red;">{{ message }}</p>
+    {% endfor %}
+
+    <!-- NUMBER INPUT -->
+    <input id="qty"
+           type="number"
+           name="quantity"
+           value="{{quantity}}"
+           min="1" max="10"
+           style="width: 70px; text-align:center; padding:10px; font-size:16px;
+                  border-radius:8px; border:1px solid #ccc;">
+
+    <!-- PLUS BUTTON -->
+    <a href="{% url 'paintapp:updatequantity' buy_item.id 'plus' %}">
+    <button type="button"
+            style="padding: 10px 16px; font-size: 20px; border-radius: 8px;
+                   border:none; background:#ddd; cursor:pointer;">
+        +
+    </button>
+</a>
+
+</div>
+        <!-- ORDER BUTTON -->
+         <a href="{% url 'paintapp:ordernow' buy_item.id  %}">
+        <button type="submit" class="btn">ORDER NOW</button></a>
+    
+
+    <!-- ADD TO CART BUTTON -->
+    <a href="{% url 'paintapp:mycart' buy_item.id %}">
+        <button class="btn btn-cart">ADD TO CART</button>
+    </a>
+
+    <div class="rating-box">
+        <span>⭐ 4.8 (245 Reviews)</span>
+        <span>🔥 Best Seller</span>
+    </div>
+</div>
+
+</body>
+</html>

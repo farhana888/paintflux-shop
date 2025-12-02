@@ -1,0 +1,35 @@
+  {% load static %}
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>OTP Verification</title>
+      <link rel="stylesheet" href="{% static 'css/otp.css'%}">
+  </head>
+  <body>
+      <div class="container">
+          <h1>OTP Verification</h1>
+          <p>Enter the OTP you received to <span id="email"></span></p>
+          <form method="POST"action="{% url 'newapp:newotp' %}" >
+            {% csrf_token %}
+            {% if messages %}
+            {% for message in messages %}
+            <p style="color:red">{{ message }}</p>
+            {% endfor %}
+            {% endif %}
+          <div class="otp-input">
+              <input type="number" min="0" max="9" required name="input1">
+              <input type="number" min="0" max="9" required name="input2">
+              <input type="number" min="0" max="9" required name="input3">
+              <input type="number" min="0" max="9" required name="input4">
+              <input type="number" min="0" max="9" required name="input5">
+              <input type="number" min="0" max="9" required name="input6">
+          </div>
+          
+          <button type="submit">Verify</button>
+          
+          </form>  
+      </div>
+  </body>
+  </html>
