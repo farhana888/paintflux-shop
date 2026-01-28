@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-spt*i-ror^!azc!u2y4fi1$+6=)6mn92*q34eyzr%ab9yv+fr3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -75,10 +75,20 @@ WSGI_APPLICATION = 'paintproject.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # }
+    
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'master2' ,
+            'USER': 'master',
+            'PASSWORD': 'master123',
+            'HOST': "database-2.ccfwm404owrx.us-east-1.rds.amazonaws.com",
+            'PORT': '5432',
+        }
+    
 }
 
 AUTH_USER_MODEL='newapp.CustomUser'
